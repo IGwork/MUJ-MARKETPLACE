@@ -8,14 +8,17 @@ import {
   ShoppingBag,
   LogOut,
   Search,
+  Settings,
 } from 'lucide-react';
 import { useMarketplace } from '../hooks/useMarketplace';
+import ProfilePopup from './ProfilePopup';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, currentUser, logout } = useMarketplace();
+  const { isAuthenticated, currentUser, logout, isAdmin } = useMarketplace();
 
   const handleLogout = () => {
     logout();
@@ -84,7 +87,19 @@ const Navbar = () => {
                   >
                     My Listings
                   </Link>
-                  <div className="flex items-center gap-3 border-l pl-6">
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="text-secondary-700 hover:text-primary-500 transition-colors font-medium flex items-center gap-1 bg-amber-100 px-3 py-1 rounded-full"
+                    >
+                      <Settings size={16} />
+                      Admin
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => setShowProfilePopup(true)}
+                    className="flex items-center gap-3 border-l pl-6 hover:opacity-80 transition-opacity cursor-pointer"
+                  >
                     <img
                       src={currentUser?.avatar}
                       alt="avatar"
@@ -93,7 +108,7 @@ const Navbar = () => {
                     <span className="text-sm font-medium text-secondary-700">
                       {currentUser?.name}
                     </span>
-                  </div>
+                  </button>
                   <button
                     onClick={handleLogout}
                     className="text-secondary-700 hover:text-primary-500 transition-colors font-medium flex items-center gap-1"
@@ -162,9 +177,24 @@ const Navbar = () => {
                 <ShoppingBag size={18} className="inline mr-2" />
                 My Listings
               </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="block text-amber-600 hover:text-amber-700 transition-colors font-medium py-2 bg-amber-100 rounded-lg pl-3"
+                >
+                  <Settings size={18} className="inline mr-2" />
+                  Admin Dashboard
+                </Link>
+              )}
 
               <div className="border-t pt-4 mt-4">
-                <div className="flex items-center gap-3 mb-4">
+                <button
+                  onClick={() => {
+                    setShowProfilePopup(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity"
+                >
                   <img
                     src={currentUser?.avatar}
                     alt="avatar"
@@ -178,7 +208,7 @@ const Navbar = () => {
                       {currentUser?.email}
                     </p>
                   </div>
-                </div>
+                </button>
                 <button
                   onClick={handleLogout}
                   className="w-full text-left text-secondary-700 hover:text-primary-500 transition-colors font-medium py-2 flex items-center gap-2"
@@ -194,6 +224,9 @@ const Navbar = () => {
 
       {/* Spacer */}
       <div className="h-16"></div>
+
+      {/* Profile Popup */}
+      <ProfilePopup isOpen={showProfilePopup} onClose={() => setShowProfilePopup(false)} />
     </>
   );
 };

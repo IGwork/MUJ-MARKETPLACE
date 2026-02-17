@@ -8,24 +8,39 @@ export const MarketplaceProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [items, setItems] = useState(DUMMY_ITEMS);
   const [userListings, setUserListings] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const login = useCallback((email) => {
     setIsAuthenticated(true);
+    const userName = email.split('@')[0];
     setCurrentUser({
       id: 'user_' + Math.random().toString(36).substr(2, 9),
       email: email,
-      name: email.split('@')[0],
+      name: userName,
       phone: '+91 98765 43210',
+      registrationNumber: 'MUJ' + Math.floor(Math.random() * 100000),
       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
+      instagram: null,
     });
     setUserListings([]);
+    // Check if it's admin email for demo
+    setIsAdmin(email === 'admin@muj.manipal.edu');
   }, []);
 
   const logout = useCallback(() => {
     setIsAuthenticated(false);
     setCurrentUser(null);
     setUserListings([]);
+    setIsAdmin(false);
   }, []);
+
+  const updateUserProfile = useCallback((updates) => {
+    setCurrentUser((prev) => prev ? { ...prev, ...updates } : null);
+  }, []);
+
+  const getItemById = useCallback((itemId) => {
+    return items.find((item) => item.id === itemId);
+  }, [items]);
 
   const addItem = useCallback((itemData) => {
     const newItem = {
@@ -34,6 +49,9 @@ export const MarketplaceProvider = ({ children }) => {
       sellerId: currentUser?.id,
       sellerName: currentUser?.name,
       sellerPhone: currentUser?.phone,
+      sellerEmail: currentUser?.email,
+      sellerRegistration: currentUser?.registrationNumber,
+      sellerInstagram: currentUser?.instagram,
       sellerAvatar: currentUser?.avatar,
       createdAt: new Date().toISOString(),
     };
@@ -98,11 +116,14 @@ export const MarketplaceProvider = ({ children }) => {
     items,
     userListings,
     categories: CATEGORIES,
+    isAdmin,
     login,
     logout,
     addItem,
     deleteItem,
     updateItem,
+    updateUserProfile,
+    getItemById,
     getItemsByCategory,
     searchItems,
     filterItems,

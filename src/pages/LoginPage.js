@@ -12,7 +12,7 @@ const LoginPage = () => {
   const { login } = useMarketplace();
 
   const validateEmail = (emailValue) => {
-    const pattern = /^[a-zA-Z0-9._%+-]+@jaipur\.manipal\.edu$/;
+    const pattern = /^[a-zA-Z0-9._%+-]+@muj\.manipal\.edu$/;
     return pattern.test(emailValue);
   };
 
@@ -26,7 +26,7 @@ const LoginPage = () => {
     }
 
     if (!validateEmail(email)) {
-      setError('Please use your official MUJ email (@jaipur.manipal.edu)');
+      setError('Please use your official MUJ email (@muj.manipal.edu)');
       return;
     }
 
@@ -39,7 +39,9 @@ const LoginPage = () => {
     // Simulate login delay
     setTimeout(() => {
       login(email);
-      navigate('/');
+      // Redirect to admin dashboard if admin, otherwise home
+      const isAdminAccount = email === 'admin@muj.manipal.edu';
+      navigate(isAdminAccount ? '/admin' : '/');
       setIsLoading(false);
     }, 800);
   };
@@ -87,12 +89,12 @@ const LoginPage = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                  placeholder="your.name@jaipur.manipal.edu"
+                  placeholder="your.name@muj.manipal.edu"
                   className="input-field pl-12"
                 />
               </div>
               <p className="text-xs text-secondary-600 mt-1">
-                Use your official MUJ email (ending with @jaipur.manipal.edu)
+                Use your official MUJ email (ending with @muj.manipal.edu)
               </p>
             </div>
 
@@ -131,14 +133,46 @@ const LoginPage = () => {
           </form>
         </div>
 
-        {/* Demo Info */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="font-semibold text-blue-900 mb-2">Demo Account:</h3>
-          <p className="text-sm text-blue-800 mb-1">
-            <span className="font-medium">Email:</span> student@jaipur.manipal.edu
-          </p>
-          <p className="text-sm text-blue-800">
-            <span className="font-medium">Password:</span> demo123
+        {/* Demo Accounts */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="font-bold text-lg text-blue-900 mb-4 flex items-center gap-2">
+            <span className="text-xl">🎓</span> Demo Accounts
+          </h3>
+          
+          <div className="space-y-4">
+            {/* Student Demo */}
+            <div className="bg-white rounded-lg p-4 border-l-4 border-blue-500">
+              <p className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <span className="text-lg">👤</span> Student Account
+              </p>
+              <p className="text-sm mb-1">
+                <span className="font-medium text-gray-700">Email:</span>
+                <span className="text-gray-600 ml-2 font-mono">student@muj.manipal.edu</span>
+              </p>
+              <p className="text-sm">
+                <span className="font-medium text-gray-700">Password:</span>
+                <span className="text-gray-600 ml-2 font-mono">demo123</span>
+              </p>
+            </div>
+            
+            {/* Admin Demo */}
+            <div className="bg-white rounded-lg p-4 border-l-4 border-amber-500">
+              <p className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <span className="text-lg">👨‍💼</span> Admin Account
+              </p>
+              <p className="text-sm mb-1">
+                <span className="font-medium text-gray-700">Email:</span>
+                <span className="text-gray-600 ml-2 font-mono">admin@muj.manipal.edu</span>
+              </p>
+              <p className="text-sm">
+                <span className="font-medium text-gray-700">Password:</span>
+                <span className="text-gray-600 ml-2 font-mono">admin123</span>
+              </p>
+            </div>
+          </div>
+          
+          <p className="text-xs text-blue-700 mt-4 pt-4 border-t border-blue-200">
+            ℹ️ Both accounts are demo credentials for testing. Student logs in to the marketplace. Admin accesses the dashboard.
           </p>
         </div>
 

@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import BrowseItemsPage from './pages/BrowseItemsPage';
 import SellItemPage from './pages/SellItemPage';
 import MyListingsPage from './pages/MyListingsPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
+import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -43,6 +45,18 @@ function App() {
           />
 
           <Route
+            path="/product/:id"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Navbar />
+                  <ProductDetailsPage />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/sell"
             element={
               <ProtectedRoute>
@@ -61,6 +75,19 @@ function App() {
                 <>
                   <Navbar />
                   <MyListingsPage />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Route */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <>
+                  <Navbar />
+                  <AdminPage />
                 </>
               </ProtectedRoute>
             }

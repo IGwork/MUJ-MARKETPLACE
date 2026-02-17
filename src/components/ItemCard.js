@@ -1,18 +1,33 @@
 import React from 'react';
-import { Heart, MapPin } from 'lucide-react';
+import { Heart, MapPin, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ItemCard = ({ item, onItemClick, onDelete, onEdit, isOwner }) => {
   const [isFavorited, setIsFavorited] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleFavorite = (e) => {
     e.stopPropagation();
     setIsFavorited(!isFavorited);
   };
 
+  const handleViewDetails = (e) => {
+    e.stopPropagation();
+    navigate(`/product/${item.id}`);
+  };
+
+  const handleCardClick = () => {
+    if (onItemClick) {
+      onItemClick();
+    } else {
+      navigate(`/product/${item.id}`);
+    }
+  };
+
   return (
     <div
-      onClick={onItemClick}
-      className="card overflow-hidden cursor-pointer group hover:scale-105 transition-transform duration-300"
+      onClick={handleCardClick}
+      className="card overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
     >
       {/* Image Section */}
       <div className="relative h-48 bg-gray-200 overflow-hidden">
@@ -87,7 +102,13 @@ const ItemCard = ({ item, onItemClick, onDelete, onEdit, isOwner }) => {
             </button>
           </div>
         ) : (
-          <button className="w-full btn-primary text-sm">Contact Seller</button>
+          <button
+            onClick={handleViewDetails}
+            className="w-full bg-primary-500 hover:bg-primary-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+          >
+            View Details
+            <ArrowRight size={16} />
+          </button>
         )}
       </div>
     </div>
