@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/MUJ-MARKETPLACE/static/css/main.55b76fb2.css",
-    "main.js": "/MUJ-MARKETPLACE/static/js/main.359a91e3.js",
+    "main.css": "/MUJ-MARKETPLACE/static/css/main.00439bac.css",
+    "main.js": "/MUJ-MARKETPLACE/static/js/main.3d67e27a.js",
     "index.html": "/MUJ-MARKETPLACE/index.html",
-    "main.55b76fb2.css.map": "/MUJ-MARKETPLACE/static/css/main.55b76fb2.css.map",
-    "main.359a91e3.js.map": "/MUJ-MARKETPLACE/static/js/main.359a91e3.js.map"
+    "main.00439bac.css.map": "/MUJ-MARKETPLACE/static/css/main.00439bac.css.map",
+    "main.3d67e27a.js.map": "/MUJ-MARKETPLACE/static/js/main.3d67e27a.js.map"
   },
   "entrypoints": [
-    "static/css/main.55b76fb2.css",
-    "static/js/main.359a91e3.js"
+    "static/css/main.00439bac.css",
+    "static/js/main.3d67e27a.js"
   ]
 }
