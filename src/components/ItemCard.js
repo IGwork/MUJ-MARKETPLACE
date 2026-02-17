@@ -16,25 +16,14 @@ const ItemCard = ({ item, onItemClick, onDelete, onEdit, isOwner }) => {
     navigate(`/product/${item.id}`);
   };
 
-  const handleCardClick = () => {
-    if (onItemClick) {
-      onItemClick();
-    } else {
-      navigate(`/product/${item.id}`);
-    }
-  };
-
   return (
-    <div
-      onClick={handleCardClick}
-      className="card overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-    >
+    <div className="card overflow-hidden">
       {/* Image Section */}
       <div className="relative h-48 bg-gray-200 overflow-hidden">
         <img
           src={item.image}
           alt={item.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          className="w-full h-full object-cover transition-transform duration-300"
         />
         <button
           onClick={handleFavorite}
